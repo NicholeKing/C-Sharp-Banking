@@ -1,0 +1,37 @@
+@{
+    ViewData["Title"] = "Main";
+}
+@model Transaction
+<div>
+	<a href="/logout" style="float: right;">Logout</a>
+	<h1>Welcome, @ViewBag.user.FirstName</h1><br>
+	<form action="/transact" method="post">
+		<h4>Deposit/Withdraw: 
+			$<input asp-for="Amount" value="0.00" required style="width: 100px; text-align: right;"> 
+			<input type="submit" value="Submit" class="btn btn-primary btn-sm" style="height: 35px;vertical-align: top;"></h4><span asp-validation-for="Amount"></span><br>
+	</form>
+	<table class="table table-bordered col-4">
+		<tr>
+			<th>Name</th>
+			<th>Balance</th>
+		</tr>
+		<tr>
+			<td>@ViewBag.user.FirstName @ViewBag.user.LastName</td>
+			<td>$@ViewBag.user.Balance.ToString("0.00")</td>
+		</tr>
+	</table><br>
+	<h3>Transaction history</h3>
+	<table class="table table-bordered col-7">
+		<tr>
+			<th>Amount</th>
+			<th>Date</th>
+		</tr>
+		@foreach(var t in ViewBag.trans)
+		{
+			<tr>
+				<td>$@t.Amount.ToString("0.00")</td>
+				<td>@t.CreatedAt.ToString("MM/dd/yyyy HH:mm tt")</td>
+			</tr>
+		}
+	</table>
+</div>
